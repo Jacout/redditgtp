@@ -15,7 +15,9 @@ $posts = $pdo->query("SELECT posts.*, users.username FROM posts JOIN users ON po
     <h1>Publicaciones</h1>
     <a href="create_post.php">Crear Publicación</a>
     <a href="login.php">Iniciar Sesión</a>
+    <a href="registro.php">Registro</a>
     <a href="profile.php">Perfil</a>
+
 
     <?php foreach ($posts as $post): ?>
         <h2><?php echo htmlspecialchars($post['title']); ?></h2>

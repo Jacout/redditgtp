@@ -14,6 +14,7 @@ $posts = $pdo->query("SELECT posts.*, users.username FROM posts JOIN users ON po
 <body>
     <h1>Publicaciones</h1>
     <a href="create_post.php">Crear Publicación</a>
+    <button class="button button5" href="create_post.php">+</button>
     <a href="login.php">Iniciar Sesión</a>
     <a href="registro.php">Registro</a>
     <a href="profile.php">Perfil</a>

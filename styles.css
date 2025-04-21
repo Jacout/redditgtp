@@ -1,0 +1,186 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #007bff;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between; /* Distribuye los elementos a los lados */
+    align-items: center; /* Centra verticalmente los elementos */
+    padding: 10px 20px; /* Ajusta el espaciado interno del navbar */
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 0px 5px; /* Reduce el espacio interno de los enlaces */
+    margin: 0; /* Elimina márgenes adicionales */
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navbar a:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.notification {
+    position: relative;
+    display: inline-block;
+}
+
+
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.modal-content button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3;
+}
+
+/* Formulario de Publicación */
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para la imagen del login */
+.avatar {
+    width: 100px; /* Ancho fijo */
+    height: 100px; /* Alto fijo */
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen se ajuste al contenedor sin deformarse */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+    display: block; /* Asegura que se comporte como un bloque */
+}
+        /* Centrar la sección de "Foros más famosos" */
+        .container ul {
+            list-style-type: none; /* Elimina los puntos de la lista */
+            padding: 0;
+            text-align: center; /* Centra el texto */
+        }
+
+        .container ul li {
+            display: inline-block; /* Hace que los elementos de la lista estén en línea */
+            margin: 0 10px; /* Agrega espacio entre los elementos */
+        }
+
+        .container ul li a {
+            text-decoration: none; /* Elimina el subrayado de los enlaces */
+            color: #007bff; /* Color del texto */
+            font-weight: bold;
+        }
+
+        .container ul li a:hover {
+            color: #0056b3; /* Cambia el color al pasar el cursor */
+        }
+
+        /* Estilo para el contenedor del lado derecho del navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Reduce el espacio entre el nombre de la página y la imagen */
+        }
+
+        .page-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-right: 10px;
+            color: white;
+        }
+
+        .navbar-logo {
+            width: 40px; /* Ajusta el tamaño de la imagen */
+            height: 40px;
+            border-radius: 50%; /* Hace la imagen circular */
+            object-fit: cover;
+        }

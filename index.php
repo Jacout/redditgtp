@@ -17,6 +17,7 @@ $posts = $pdo->query("SELECT posts.*, users.username FROM posts JOIN users ON po
     <a href="login.php">Iniciar Sesión</a>
     <a href="registro.php">Registro</a>
     <a href="profile.php">Perfil</a>
+    <a href="cerrar_sesion.php"></a>
 
 
     <?php foreach ($posts as $post): ?>

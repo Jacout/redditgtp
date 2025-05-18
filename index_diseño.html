@@ -13,6 +13,7 @@
     <!-- NAVBAR -->
     <div class="navbar">
         <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
+        <a href="create_post.php"><i class="fa fa-fw fa-envelope"></i> Publicar</a>
         <a href="#" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"><i class="fa fa-fw fa-user"></i> Login</a>
         <!-- ajolote chan agrega para ver tu perfil un boton que tenga llamar al profile.php,otra cosa vas a agregar notificacion?, no lo hagas con el ogt-->
         <!-- Contenedor para el nombre de la página y la imagen -->
@@ -58,7 +59,9 @@
             <li><a href="#">Música</a></li>
             <li><a href="#">Fútbol</a></li>
         </ul>
-        <?php
+        
+        <!-- Esto se controla si se encuentra logeado si no mostrar post recientes-->
+        <?=
         session_start();
         if (!isset($_SESSION['user_id'])) {
             $_SESSION['user_id'] = 0;

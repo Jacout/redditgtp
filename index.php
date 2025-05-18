@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
+<>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inicio</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="redditgtp_icon/favicon-32x32.png">
 
 </head>
 <body>
     <!-- NAVBAR -->
     <div class="navbar">
         <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
-        <a href="#" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"><i class="fa fa-fw fa-user"></i> Login</a>
+        
+        <?php
+        session_start();
+
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['user_id'] = 0;
+        }
+        if ($_SESSION['user_id'] == 0){
+
+            echo '<a href="#" onclick="document.getElementById(\'id01\').style.display=\'block\'" style="width:auto;"><i class="fa fa-fw fa-user"></i> Login</a>';
+
+        }
+        else{
+            echo'<a href="modulos_php/cerrar_sesion.php">Cerrar Sesión</a>';
+        }
+        ?>
+        
         <!-- ajolote chan agrega para ver tu perfil un boton que tenga llamar al profile.php,otra cosa vas a agregar notificacion?, no lo hagas con el ogt-->
         <!-- Contenedor para el nombre de la página y la imagen -->
         <div class="navbar-right">
@@ -22,13 +39,9 @@
         </div>
     </div>
 
-    <!-- LOGIN MODAL -->
+    <!-- LOGIN MODAL o cerrar sesion -->
     <div id="id01" class="modal">
-        <form class="modal-content animate" action="modulos_php/login.php" method="post">
-            <div class="imgcontainer">
-                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-                <img src="avatar.jpg" alt="Avatar" class="avatar">
-            </div>
+    <form class="modal-content animate" action="modulos_php/login.php" method="post">
             <div class="container">
                 <label for="uname"><b>Username</b></label>
                 <input type="text" placeholder="Enter Username" name="uname" required>
@@ -44,8 +57,7 @@
                 <span class="psw">Forgot <a href="#">password?</a></span>
             </div>
         </form>
-    </div>
-
+    </div>'
     <!-- Foro -->
     <div class="container">
         
@@ -53,27 +65,24 @@
         
         <h2 style="text-align: left;">Comunidades recientes</h2>
         
-        <ul>  <!-- falta añadir mediante PHP-->
-            <li><a href="#">Videos</a></li>
-            <li><a href="#">Música</a></li>
-            <li><a href="#">Fútbol</a></li>
-        </ul>
         <?php
-        session_start();
+        include "modulos_php/comunidades.php";
+
         if (!isset($_SESSION['user_id'])) {
             $_SESSION['user_id'] = 0;
         }
         if ($_SESSION['user_id'] != 0){
 
             echo '<h2>Crear nuevo post</h2>
-                <form action="create_post.php" method="POST">
+                <form action="modulos_php/create_post.php" method="POST">
                 <input type="text" name="title" placeholder="Título" required>
                 <textarea name="content" placeholder="Contenido" required></textarea>
                 <button type="submit">Crear</button>
                 </form>';
         }
         else{
-            echo '<h2> Foros mas recientes</h2>';
+            echo '<h2> Post mas recientes</h2>';
+            include "modulos_php\consulta_post.php";
         }
 
         ?>

@@ -1,15 +1,16 @@
 <?php
 session_start();
-include 'conex.php';
+include 'modulos_php/conex.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
+    echo'<script type="text/javascript">
+        alert("Favor de logearse");
+        window.location.href="/redditgtp"
+        </script>';
 }
 
 $user_id = $_SESSION['user_id'];
-$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-$stmt->execute([$user_id]);
+$stmt = $pdo->query("SELECT * FROM users WHERE id = '$user_id'");
 $user = $stmt->fetch();
 ?>
 
@@ -17,11 +18,68 @@ $user = $stmt->fetch();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Perfil</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="redditgtp_icon/favicon-32x32.png">
 </head>
 <body>
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <a class="active" href="index.php"><i class="fa fa-fw fa-home"></i> Home</a>
+        
+        <?php
+
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['user_id'] = 0;
+        }
+        if ($_SESSION['user_id'] == 0){
+
+            echo '<a href="#" onclick="document.getElementById(\'id01\').style.display=\'block\'" style="width:auto;"><i class="fa fa-fw fa-user"></i> Login</a>';
+
+        }
+        else{            
+            echo'<a class="active" href="modulos_php/cerrar_sesion.php"><i class="fa fa-fw fa-home"></i>Cerrar Sesión</a>';
+            echo'<a class="active" href="profile.php"><i class="fa-solid fa-user"></i>',htmlspecialchars($_SESSION['user']), '</a>';
+        }
+        ?>
+        
+        <!-- ajolote chan agrega para ver tu perfil un boton que tenga llamar al profile.php,otra cosa vas a agregar notificacion?, no lo hagas con el ogt-->
+        <!-- Contenedor para el nombre de la página y la imagen -->
+        <div class="navbar-right">
+            <span class="page-name">RedditBlack</span>
+            <br></br>
+        </div>
+    </div>
+
+    <!-- LOGIN MODAL o cerrar sesion -->
+    <div id="id01" class="modal">
+    <form class="modal-content animate" action="modulos_php/login.php" method="post">
+            <div class="container">
+                <label for="uname"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="uname" required>
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+                <button type="submit">Login</button>
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>
+            </div>
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </form>
+    </div>
+
+    <br><br><br><br><br>
+    <!-- Seccion de perfil de usuario -->
+    <div>
     <h1>Perfil de <?php echo htmlspecialchars($user['username']); ?></h1>
     <p>ID de Usuario: <?php echo htmlspecialchars($user['id']); ?></p>
-    <a href="../index">Volver a Inicio</a>
+    <a href="index.php">Volver a Inicio</a>
+    </div>
 </body>
 </html>

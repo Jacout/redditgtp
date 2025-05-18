@@ -27,7 +27,8 @@
 
         }
         else{
-            echo'<a href="modulos_php/cerrar_sesion.php">Cerrar Sesión</a>';
+            echo'<a class="active" href="modulos_php/cerrar_sesion.php"><i class="fa fa-fw fa-home"></i>Cerrar Sesión</a>';
+            echo'<a class="active" href="profile.php"><i class="fa-solid fa-user"></i>',htmlspecialchars($_SESSION['user']), '</a>';
         }
         ?>
         

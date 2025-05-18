@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
+        <a href="#" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"><i class="fa fa-fw fa-user"></i> Login</a>
+        <!-- ajolote chan agrega para ver tu perfil un boton que tenga llamar al profile.php,otra cosa vas a agregar notificacion?, no lo hagas con el ogt-->
+        <!-- Contenedor para el nombre de la página y la imagen -->
+        <div class="navbar-right">
+            <span class="page-name">RedditBlack</span>
+            <br></br>
+        </div>
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div id="id01" class="modal">
+        <form class="modal-content animate" action="modulos_php/login.php" method="post">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <img src="avatar.jpg" alt="Avatar" class="avatar">
+            </div>
+            <div class="container">
+                <label for="uname"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="uname" required>
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+                <button type="submit">Login</button>
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>
+            </div>
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </form>
+    </div>
+
+    <!-- Foro -->
+    <div class="container">
+        
+        <br></br>
+        
+        <h2 style="text-align: left;">Comunidades recientes</h2>
+        
+        <ul>  <!-- falta añadir mediante PHP-->
+            <li><a href="#">Videos</a></li>
+            <li><a href="#">Música</a></li>
+            <li><a href="#">Fútbol</a></li>
+        </ul>
+        <?php
+        session_start();
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['user_id'] = 0;
+        }
+        if ($_SESSION['user_id'] != 0){
+
+            echo '<h2>Crear nuevo post</h2>
+                <form action="create_post.php" method="POST">
+                <input type="text" name="title" placeholder="Título" required>
+                <textarea name="content" placeholder="Contenido" required></textarea>
+                <button type="submit">Crear</button>
+                </form>';
+        }
+        else{
+            echo '<h2> Foros mas recientes</h2>';
+        }
+
+        ?>
+
+        
+    </div>
+</body>
+</html>

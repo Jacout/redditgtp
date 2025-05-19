@@ -45,11 +45,156 @@
     </div>
 
     <br><br><br><br><br>
-    <!-- Seccion de perfil de usuario -->
-    <div>
-    <h1>Perfil de <?php echo htmlspecialchars($user['username']); ?></h1>
-    <p>ID de Usuario: <?php echo htmlspecialchars($user['id']); ?></p>
-    <a href="index.php">Volver a Inicio</a>
+    <!-- Sección de perfil de usuario mejorada -->
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-avatar">
+                <img src="images/default_avatar.png" alt="Avatar de usuario">
+            </div>
+            <div class="profile-info">
+                <h2><?php echo htmlspecialchars($user['username']); ?></h2>
+                <p class="profile-id">ID de Usuario: <?php echo htmlspecialchars($user['id']); ?></p>
+                <p class="profile-bio">¡Bienvenido a tu perfil! Aquí puedes ver y editar tu información personal.</p>
+                <a href="editar_perfil.php" class="profile-edit-btn"><i class="fa fa-pencil"></i> Editar Perfil</a>
+                <a href="index.php" class="profile-home-btn"><i class="fa fa-home"></i> Volver a Inicio</a>
+            </div>
+        </div>
     </div>
+
+    <!-- Apartados adicionales -->
+    <div class="profile-sections">
+        <div class="profile-section">
+            <h3><i class="fa fa-user"></i> Sobre mí</h3>
+            <p>
+                <?php echo !empty($user['about']) ? htmlspecialchars($user['about']) : "Aún no has escrito nada sobre ti."; ?>
+            </p>
+        </div>
+        <div class="profile-section">
+            <h3><i class="fa fa-users"></i> Amigos</h3>
+            <ul class="profile-list">
+                <?php if (!empty($user['friends'])): ?>
+                    <?php foreach ($user['friends'] as $friend): ?>
+                        <li><i class="fa fa-user-circle"></i> <?php echo htmlspecialchars($friend); ?></li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li>No tienes amigos agregados aún.</li>
+                <?php endif; ?>
+            </ul>
+        </div>
+        <div class="profile-section">
+            <h3><i class="fa fa-comments"></i> Comunidades</h3>
+            <ul class="profile-list">
+                <?php if (!empty($user['communities'])): ?>
+                    <?php foreach ($user['communities'] as $community): ?>
+                        <li><i class="fa fa-hashtag"></i> <?php echo htmlspecialchars($community); ?></li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li>No sigues ninguna comunidad todavía.</li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </div>
+
+    <style>
+        /* Perfil de usuario */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.profile-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 40px 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.profile-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ff4500;
+}
+
+.profile-info h2 {
+    margin: 0 0 8px 0;
+    font-size: 2rem;
+    color: #222;
+}
+
+.profile-id {
+    color: #888;
+    margin-bottom: 12px;
+}
+
+.profile-bio {
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.profile-edit-btn,
+.profile-home-btn {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 8px 18px;
+    border-radius: 6px;
+    background: #ff4500;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.profile-edit-btn:hover,
+.profile-home-btn:hover {
+    background: #d93a00;
+}
+
+.profile-sections {
+        max-width: 600px;
+        margin: 40px auto 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        justify-content: space-between;
+    }
+    .profile-section {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        padding: 24px 20px;
+        flex: 1 1 250px;
+        min-width: 250px;
+    }
+    .profile-section h3 {
+        margin-top: 0;
+        color: #ff4500;
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .profile-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .profile-list li {
+        margin-bottom: 8px;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    </style>
 </body>
 </html>

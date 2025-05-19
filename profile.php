@@ -76,10 +76,55 @@ $user = $stmt->fetch();
 
     <br><br><br><br><br>
     <!-- Seccion de perfil de usuario -->
-    <div>
-    <h1>Perfil de <?php echo htmlspecialchars($user['username']); ?></h1>
-    <p>ID de Usuario: <?php echo htmlspecialchars($user['id']); ?></p>
-    <a href="index.php">Volver a Inicio</a>
+    <!-- Sección de perfil de usuario mejorada -->
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-avatar">
+                <img src="img/494577557_3899269736954152_104176148224765838_n.png" alt="Avatar de usuario">
+            </div>
+            <div class="profile-info">
+                <h2><?php echo htmlspecialchars($_SESSION['user']); ?></h2>
+                <p class="profile-id">ID de Usuario: <?php echo htmlspecialchars($user['id']); ?></p>
+                <p class="profile-bio">¡Bienvenido a tu perfil! Aquí puedes ver y editar tu información personal.</p>
+                <a href="" class="profile-edit-btn"><i class="fa fa-pencil"></i> Editar Perfil</a>
+                <a href="index.php" class="profile-home-btn"><i class="fa fa-home"></i> Volver a Inicio</a>
+            </div>
+        </div>
     </div>
+
+    <!-- Apartados adicionales -->
+    <div class="profile-sections">
+        <div class="profile-section">
+            <h3><i class="fa fa-user"></i> Sobre mí</h3>
+            <p>
+                <?php echo !empty($user['about']) ? htmlspecialchars($user['about']) : "Aún no has escrito nada sobre ti."; ?>
+            </p>
+        </div>
+        <div class="profile-section">
+            <h3><i class="fa fa-users"></i> Amigos</h3>
+            <ul class="profile-list">
+                <?php if (!empty($user['friends'])): ?>
+                    <?php foreach ($user['friends'] as $friend): ?>
+                        <li><i class="fa fa-user-circle"></i> <?php echo htmlspecialchars($friend); ?></li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li>No tienes amigos agregados aún.</li>
+                <?php endif; ?>
+            </ul>
+        </div>
+        <div class="profile-section">
+            <h3><i class="fa fa-comments"></i> Comunidades</h3>
+            <ul class="profile-list">
+                <?php if (!empty($user['communities'])): ?>
+                    <?php foreach ($user['communities'] as $community): ?>
+                        <li><i class="fa fa-hashtag"></i> <?php echo htmlspecialchars($community); ?></li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li>No sigues ninguna comunidad todavía.</li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </div>
+
 </body>
 </html>

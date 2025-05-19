@@ -80,7 +80,7 @@ $user = $stmt->fetch();
     <div class="profile-container">
         <div class="profile-card">
             <div class="profile-avatar">
-                <img src="img/494577557_3899269736954152_104176148224765838_n.png" alt="Avatar de usuario">
+                <img src="" alt="Avatar de usuario">
             </div>
             <div class="profile-info">
                 <h2><?php echo htmlspecialchars($_SESSION['user']); ?></h2>

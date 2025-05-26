@@ -10,8 +10,14 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$stmt = $pdo->query("SELECT * FROM users WHERE id = '$user_id'");
+$stmt = $pdo->query("SELECT * FROM users WHERE id_user = '$user_id'");
 $user = $stmt->fetch();
+
+//cargar los post
+
+$stmt2 = $pdo->query("SELECT title, content,created_at,username FROM posts
+INNER JOIN users ON users.id_user=posts.user_id WHERE id_user = '$user_id'");
+
 ?>
 
 <!DOCTYPE html>
@@ -54,26 +60,6 @@ $user = $stmt->fetch();
         </div>
     </div>
 
-    <!-- LOGIN MODAL o cerrar sesion -->
-    <div id="id01" class="modal">
-    <form class="modal-content animate" action="modulos_php/login.php" method="post">
-            <div class="container">
-                <label for="uname"><b>Username</b></label>
-                <input type="text" placeholder="Enter Username" name="uname" required>
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
-                <button type="submit">Login</button>
-                <label>
-                    <input type="checkbox" checked="checked" name="remember"> Remember me
-                </label>
-            </div>
-            <div class="container" style="background-color:#f1f1f1">
-                <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-                <span class="psw">Forgot <a href="#">password?</a></span>
-            </div>
-        </form>
-    </div>
-
     <br><br><br><br><br>
     <!-- Seccion de perfil de usuario -->
     <!-- Sección de perfil de usuario mejorada -->
@@ -84,7 +70,7 @@ $user = $stmt->fetch();
             </div>
             <div class="profile-info">
                 <h2><?php echo htmlspecialchars($_SESSION['user']); ?></h2>
-                <p class="profile-id">ID de Usuario: <?php echo htmlspecialchars($user['id']); ?></p>
+                <p class="profile-id">ID de Usuario: <?php echo htmlspecialchars($_SESSION['user_id']); ?></p>
                 <p class="profile-bio">¡Bienvenido a tu perfil! Aquí puedes ver y editar tu información personal.</p>
                 <a href="" class="profile-edit-btn"><i class="fa fa-pencil"></i> Editar Perfil</a>
                 <a href="index.php" class="profile-home-btn"><i class="fa fa-home"></i> Volver a Inicio</a>
@@ -113,16 +99,28 @@ $user = $stmt->fetch();
             </ul>
         </div>
         <div class="profile-section">
-            <h3><i class="fa fa-comments"></i> Comunidades</h3>
-            <ul class="profile-list">
-                <?php if (!empty($user['communities'])): ?>
-                    <?php foreach ($user['communities'] as $community): ?>
-                        <li><i class="fa fa-hashtag"></i> <?php echo htmlspecialchars($community); ?></li>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <li>No sigues ninguna comunidad todavía.</li>
-                <?php endif; ?>
-            </ul>
+            <h3><i class="fa fa-comments"></i>Post realizados</h3>
+           <?php if ($stmt2 && $stmt2->rowCount() > 0){
+            foreach ($stmt2->fetchAll() as $post){
+            echo '<div class="publicacion">
+                    <div class="votos">
+                    <div class="arrow">&#9650;</div>
+                    <div>0</div>
+                    <div class="arrow">&#9660;</div>
+                    </div>
+                    <div class="contenido-publicacion">
+                    <div class="titulo">',htmlspecialchars($post['title']), '</div>
+                    <div class="meta">Publicado por', htmlspecialchars($post['username']), ' | ',
+                    htmlspecialchars($post['created_at']), '</div>
+                    <div class="contenido">', htmlspecialchars($post['content']) ,'</div>
+                    </div></div>';
+        }
+    }
+    else {
+        echo "no hay publicaciones";
+    }
+    ?>
+
         </div>
     </div>
 

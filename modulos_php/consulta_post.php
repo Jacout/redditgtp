@@ -1,7 +1,7 @@
 <?php
 include 'conex.php';
 
-$posts = $pdo->query("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ORDER BY created_at DESC LIMIT 10")->fetchAll();
+$posts = $pdo->query("SELECT title, content,username FROM posts JOIN users ON posts.user_id = users.id_user ORDER BY created_at DESC LIMIT 10")->fetchAll();
 
 foreach ($posts as $post):
             echo '<h2>' , htmlspecialchars($post["title"]) , '</h2>';

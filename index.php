@@ -69,16 +69,24 @@
         <?php
         include "modulos_php/comunidades.php";
 
+        print_r($comunidades);
+
         if (!isset($_SESSION['user_id'])) {
             $_SESSION['user_id'] = 0;
         }
         if ($_SESSION['user_id'] != 0){
-
+            echo'<a href="comunidad_new.php"><h3 style="text-align: left;">Crear comunidad</h3></a>';
             echo '<h2>Crear nuevo post</h2>
                 <form action="modulos_php/create_post.php" method="POST">
                 <input type="text" name="title" placeholder="Título" required>
                 <textarea name="content" placeholder="Contenido" required></textarea>
-                <button type="submit">Crear</button>
+            <select name="comunidad" id="comunidad">';
+            foreach($comunidades as $comunidad){
+            echo '<option value="', htmlspecialchars($comunidad[0]),'"><', htmlspecialchars($comunidad[1]),'</option>';
+            }
+            echo '</select>
+            <br>
+            <button type="submit">Crear</button>
                 </form>';
         }
         else{

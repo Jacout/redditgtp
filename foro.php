@@ -1,109 +1,73 @@
 <?php
-// Conexión a la base de datos
-$conexion = new mysqli("localhost", "root", "", "nombre_de_tu_bd");
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
-
+include("modulos_php/conex.php");
+$comunidad = $_GET['comunidad'];
 // Consulta para obtener las publicaciones
-$sql = "SELECT id, titulo, contenido, autor, fecha FROM publicaciones ORDER BY fecha DESC";
-$resultado = $conexion->query($sql);
+$sql = "SELECT title, content,created_at,username FROM posts
+INNER JOIN users ON users.id_user=posts.user_id
+INNER JOIN comunidades ON comunidades.id_foro=posts.comun
+WHERE comunidades.id_foro=$comunidad
+ORDER BY created_at DESC;";
+$resultado = $pdo->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Foro - Publicaciones</title>
-    <style>
-        body {
-            background: #dae0e6;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            background: #fff;
-            border-bottom: 1px solid #ccc;
-            padding: 16px 0;
-            text-align: center;
-            font-size: 2em;
-            font-weight: bold;
-            color:rgb(87, 106, 255);
-            letter-spacing: 2px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-        }
-        .container {
-            max-width: 700px;
-            margin: 30px auto;
-            background: #fff;
-            border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            padding: 24px 32px;
-        }
-        .publicacion {
-            display: flex;
-            border-bottom: 1px solid #eee;
-            padding: 18px 0;
-        }
-        .votos {
-            width: 48px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-right: 18px;
-            color: #878a8c;
-            font-size: 1.2em;
-        }
-        .votos .arrow {
-            font-size: 1.5em;
-            cursor: pointer;
-            user-select: none;
-        }
-        .contenido-publicacion {
-            flex: 1;
-        }
-        .titulo {
-            font-size: 1.25em;
-            font-weight: bold;
-            color: #222;
-            margin-bottom: 6px;
-        }
-        .meta {
-            color: #878a8c;
-            font-size: 0.95em;
-            margin-bottom: 10px;
-        }
-        .contenido {
-            color: #333;
-            margin-bottom: 8px;
-        }
-        .publicacion:last-child {
-            border-bottom: none;
-        }
-    </style>
+    <link rel="stylesheet" href="styles/style_foro.css">
 </head>
 <body>
+    <div class="navbar">
+        <a class="active" href="index.php"><i class="fa fa-fw fa-home"></i> Home</a>
+        
+        <?php
+        session_start();
+
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['user_id'] = 0;
+        }
+        if ($_SESSION['user_id'] == 0){
+
+            echo '<a href="#" onclick="document.getElementById(\'id01\').style.display=\'block\'" style="width:auto;"><i class="fa fa-fw fa-user"></i> Login</a>';
+
+        }
+        else{
+            echo'<a class="active" href="modulos_php/cerrar_sesion.php"><i class="fa fa-fw fa-home"></i>Cerrar Sesión</a>';
+            echo'<a class="active" href="profile.php"><i class="fa-solid fa-user"></i>',htmlspecialchars($_SESSION['user']), '</a>';
+        }
+        ?>
+        
+        <!-- ajolote chan agrega para ver tu perfil un boton que tenga llamar al profile.php,otra cosa vas a agregar notificacion?, no lo hagas con el ogt-->
+        <!-- Contenedor para el nombre de la página y la imagen -->
+        <div class="navbar-right">
+            <span class="page-name">RedditBlack</span>
+            <br></br>
+        </div>
+    </div>
+<br><br><br><br>
     <div class="header">RedditGTP - Foro</div>
     <div class="container">
-        <?php if ($resultado && $resultado->num_rows > 0): ?>
-            <?php while($fila = $resultado->fetch_assoc()): ?>
-                <div class="publicacion">
+        <?php 
+        if ($resultado && $resultado->rowCount() > 0){
+        foreach ($resultado as $post){
+            echo '<div class="publicacion">
                     <div class="votos">
-                        <div class="arrow">&#9650;</div>
-                        <div>0</div>
-                        <div class="arrow">&#9660;</div>
+                    <div class="arrow">&#9650;</div>
+                    <div>0</div>
+                    <div class="arrow">&#9660;</div>
                     </div>
                     <div class="contenido-publicacion">
-                        <div class="titulo"><?= htmlspecialchars($fila['titulo']) ?></div>
-                        <div class="meta">Publicado por <?= htmlspecialchars($fila['autor']) ?> | <?= htmlspecialchars($fila['fecha']) ?></div>
-                        <div class="contenido"><?= nl2br(htmlspecialchars($fila['contenido'])) ?></div>
-                    </div>
-                </div>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <p>No hay publicaciones aún.</p>
-        <?php endif; ?>
-        <?php $conexion->close(); ?>
+                    <div class="titulo">',htmlspecialchars($post['title']), '</div>
+                    <div class="meta">Publicado por', htmlspecialchars($post['username']), ' | ',
+                    htmlspecialchars($post['created_at']), '</div>
+                    <div class="contenido">', htmlspecialchars($post['content']) ,'</div>
+                    </div></div>';
+        }
+    }
+    else {
+        echo "no hay publicaciones";
+    }
+?>
     </div>
 </body>
 </html>

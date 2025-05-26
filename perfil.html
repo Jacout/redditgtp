@@ -1,19 +1,3 @@
-<?php
-session_start();
-include 'modulos_php/conex.php';
-
-if (!isset($_SESSION['user_id'])) {
-    echo'<script type="text/javascript">
-        alert("Favor de logearse");
-        window.location.href="/redditgtp"
-        </script>';
-}
-
-$user_id = $_SESSION['user_id'];
-$stmt = $pdo->query("SELECT * FROM users WHERE id = '$user_id'");
-$user = $stmt->fetch();
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -30,21 +14,7 @@ $user = $stmt->fetch();
     <div class="navbar">
         <a class="active" href="index.php"><i class="fa fa-fw fa-home"></i> Home</a>
         
-        <?php
-
-        if (!isset($_SESSION['user_id'])) {
-            $_SESSION['user_id'] = 0;
-        }
-        if ($_SESSION['user_id'] == 0){
-
-            echo '<a href="#" onclick="document.getElementById(\'id01\').style.display=\'block\'" style="width:auto;"><i class="fa fa-fw fa-user"></i> Login</a>';
-
-        }
-        else{            
-            echo'<a class="active" href="modulos_php/cerrar_sesion.php"><i class="fa fa-fw fa-home"></i>Cerrar Sesión</a>';
-            echo'<a class="active" href="profile.php"><i class="fa-solid fa-user"></i>',htmlspecialchars($_SESSION['user']), '</a>';
-        }
-        ?>
+  
         
         <!-- ajolote chan agrega para ver tu perfil un boton que tenga llamar al profile.php,otra cosa vas a agregar notificacion?, no lo hagas con el ogt-->
         <!-- Contenedor para el nombre de la página y la imagen -->
@@ -75,18 +45,17 @@ $user = $stmt->fetch();
     </div>
 
     <br><br><br><br><br>
-    <!-- Seccion de perfil de usuario -->
     <!-- Sección de perfil de usuario mejorada -->
     <div class="profile-container">
         <div class="profile-card">
             <div class="profile-avatar">
-                <img src="" alt="Avatar de usuario">
+                <img src="images/default_avatar.png" alt="Avatar de usuario">
             </div>
             <div class="profile-info">
-                <h2><?php echo htmlspecialchars($_SESSION['user']); ?></h2>
+                <h2><?php echo htmlspecialchars($user['username']); ?></h2>
                 <p class="profile-id">ID de Usuario: <?php echo htmlspecialchars($user['id']); ?></p>
                 <p class="profile-bio">¡Bienvenido a tu perfil! Aquí puedes ver y editar tu información personal.</p>
-                <a href="" class="profile-edit-btn"><i class="fa fa-pencil"></i> Editar Perfil</a>
+                <a href="editar_perfil.php" class="profile-edit-btn"><i class="fa fa-pencil"></i> Editar Perfil</a>
                 <a href="index.php" class="profile-home-btn"><i class="fa fa-home"></i> Volver a Inicio</a>
             </div>
         </div>
@@ -126,5 +95,106 @@ $user = $stmt->fetch();
         </div>
     </div>
 
+    <style>
+        /* Perfil de usuario */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.profile-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 40px 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.profile-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ff4500;
+}
+
+.profile-info h2 {
+    margin: 0 0 8px 0;
+    font-size: 2rem;
+    color: #222;
+}
+
+.profile-id {
+    color: #888;
+    margin-bottom: 12px;
+}
+
+.profile-bio {
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.profile-edit-btn,
+.profile-home-btn {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 8px 18px;
+    border-radius: 6px;
+    background: #ff4500;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.profile-edit-btn:hover,
+.profile-home-btn:hover {
+    background: #d93a00;
+}
+
+.profile-sections {
+        max-width: 600px;
+        margin: 40px auto 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        justify-content: space-between;
+    }
+    .profile-section {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        padding: 24px 20px;
+        flex: 1 1 250px;
+        min-width: 250px;
+    }
+    .profile-section h3 {
+        margin-top: 0;
+        color: #ff4500;
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .profile-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .profile-list li {
+        margin-bottom: 8px;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    </style>
 </body>
 </html>

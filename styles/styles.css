@@ -184,3 +184,103 @@ form button:hover {
             border-radius: 50%; /* Hace la imagen circular */
             object-fit: cover;
         }
+
+
+        .profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+    .profile-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 40px 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.profile-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ff4500;
+}
+
+.profile-info h2 {
+    margin: 0 0 8px 0;
+    font-size: 2rem;
+    color: #222;
+}
+
+.profile-id {
+    color: #888;
+    margin-bottom: 12px;
+}
+
+.profile-bio {
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.profile-edit-btn,
+.profile-home-btn {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 8px 18px;
+    border-radius: 6px;
+    background: #ff4500;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.profile-edit-btn:hover,
+.profile-home-btn:hover {
+    background: #d93a00;
+}
+
+.profile-sections {
+        max-width: 600px;
+        margin: 40px auto 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        justify-content: space-between;
+    }
+    .profile-section {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        padding: 24px 20px;
+        flex: 1 1 250px;
+        min-width: 250px;
+    }
+    .profile-section h3 {
+        margin-top: 0;
+        color: #ff4500;
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .profile-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .profile-list li {
+        margin-bottom: 8px;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }

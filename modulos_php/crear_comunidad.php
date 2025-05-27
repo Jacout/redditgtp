@@ -6,9 +6,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $descripcion = $_POST['descripcion'];
     $user_id = $_SESSION['user_id'];
 
-    $stmt = $pdo->prepare("INSERT INTO comunidades (nombre,descripcion,administrador) VALUES
-    (?,?,?)");
-    $stmt->execute([$nombre,$descripcion,$user_id]);
+    $stmt = $pdo->prepare("CALL crear_comunidad(?,?,?)");
+    $stmt->execute(params: [$nombre,$descripcion,$user_id]);
     if ($stmt == true){
         echo'<script type="text/javascript">
         alert("Comunidad creada con exito");
@@ -21,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         alert("Ocurrio un error");
         window.location.href="/redditgtp"
         </script>';
+        exit;
     }
 }
 

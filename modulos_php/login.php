@@ -8,10 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['psw'];
 
 
-
+    try{
     //if ($user && password_verify($password, $user['password'])) {
     //validacion para evitar errores que no devuelva filas y enviar mensaje
-    $result = $pdo -> query("SELECT * FROM users WHERE username = '$username'");
+    $result = $pdo -> prepare("CALL proceso_login(?)");
+    $result->execute([$username]);
     $f_numero = $result->rowCount();
     if($f_numero > 0)
     {
@@ -38,6 +39,11 @@ else{
         alert("Usuario no registrado, intente de nuevo");
         window.location.href="/redditgtp"
         </script>';
+}
+}
+catch(Exception $e){
+    $archivo = "logs.txt";
+    file_put_contents($archivo,$e);
 }
 }
 ?>

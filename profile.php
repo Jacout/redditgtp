@@ -15,8 +15,9 @@ $user = $stmt->fetch();
 
 //cargar los post
 
-$stmt2 = $pdo->query("SELECT title, content,created_at,username FROM posts
-INNER JOIN users ON users.id_user=posts.user_id WHERE id_user = '$user_id'");
+$stmt2 = $pdo->prepare("CALL post_perfile(?)");
+$stmt2->execute(params: [$user_id]);
+
 
 ?>
 

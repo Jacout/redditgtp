@@ -1,3 +1,8 @@
+CREATE DATABASE reddit_clone;
+
+USE reddit_clone;
+
+
 CREATE TABLE users (
     id_user INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
@@ -66,9 +71,68 @@ Luego para llamar al procedimiento almacenado debemos pasar un valor para el par
 
  call pa_libros_autor('Richard Bach');*/
 
+--PROCEDIMIENTO ALMACENADO LOGIN
+CREATE PROCEDURE proceso_login (in username_e VARCHAR(50))
+BEGIN
+SELECT * FROM USERS WHERE username=username_e
+END
 
- SELECT title, content,created_at,username FROM posts
+CALL proceso_login('')
+
+
+--comunidades
+CREATE PROCEDURE comunidades_carga
+BEGIN
+SELECT id_foro, nombre FROM comunidades LIMIT 3
+END
+
+CALL comunidades_carga
+
+
+--consultar los primeros diez post ultimos
+CREATE PROCEDURE ultimos_post
+BEGIN
+SELECT title, content,username FROM posts JOIN users ON posts.user_id = users.id_user ORDER BY created_at DESC LIMIT 10
+END
+
+CALL ultimos_post
+
+--crear comunidad
+CREATE PROCEDURE crear_comunidad(IN nombre_foro VARCHAR(30), IN descr VARCHAR(100), IN user INT)
+BEGIN
+INSERT INTO comunidades (nombre,descripcion,administrador) VALUES (nombre_foro,descr,user)
+END
+
+CALL crear_comunidad('','',)
+
+
+--crear post
+CREATE PROCEDURE crear_post(IN user_e INT, IN titulo VARCHAR(255), IN contenido TEXT)
+BEGIN
+INSERT INTO posts (user_id, title, content) VALUES (user,titulo ,contenido)
+END
+
+CALL crear_post('','',)
+
+
+--consulta de los post de foro
+CREATE PROCEDURE post_foro(in foro_s INT)
+BEGIN
+SELECT title, content,created_at,username FROM posts
 INNER JOIN users ON users.id_user=posts.user_id
 INNER JOIN comunidades ON comunidades.id_foro=posts.comun
-WHERE comunidades.id_foro=(SELECT id_foro FROM comunidades WHERE nombre ='Musica')
+WHERE comunidades.id_foro=foro_s
 ORDER BY created_at DESC;
+END
+
+CALL post_foro()
+
+
+--cargar post de perfil
+CREATE PROCEDURE post_perfile(in id_usuario INT)
+BEGIN
+SELECT title, content,created_at,username FROM posts
+INNER JOIN users ON users.id_user=posts.user_id WHERE id_user = id_usuario
+END
+
+CALL post_perfile()

@@ -2,12 +2,9 @@
 include("modulos_php/conex.php");
 $comunidad = $_GET['comunidad'];
 // Consulta para obtener las publicaciones
-$sql = "SELECT title, content,created_at,username FROM posts
-INNER JOIN users ON users.id_user=posts.user_id
-INNER JOIN comunidades ON comunidades.id_foro=posts.comun
-WHERE comunidades.id_foro=$comunidad
-ORDER BY created_at DESC;";
-$resultado = $pdo->query($sql);
+$sql = "CALL post_foro(?)";
+$resultado = $pdo->prepare($sql);
+$resultado->execute($comunidad);
 ?>
 <!DOCTYPE html>
 <html lang="es">

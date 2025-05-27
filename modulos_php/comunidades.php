@@ -2,8 +2,9 @@
 
 include 'conex.php';
 
-$comunidades = $pdo->query("SELECT id_foro, nombre FROM comunidades LIMIT 3")->fetchAll();
+$comunidades = $pdo->query("CALL comunidades_carga")->fetchAll();
 
+$lista = $comunidades;
 echo '<ul>';
 foreach ($comunidades as $comunidad){
     echo '<li>';

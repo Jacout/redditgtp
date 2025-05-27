@@ -69,8 +69,6 @@
         <?php
         include "modulos_php/comunidades.php";
 
-        print_r($comunidades);
-
         if (!isset($_SESSION['user_id'])) {
             $_SESSION['user_id'] = 0;
         }
@@ -81,7 +79,7 @@
                 <input type="text" name="title" placeholder="Título" required>
                 <textarea name="content" placeholder="Contenido" required></textarea>
             <select name="comunidad" id="comunidad">';
-            foreach($comunidades as $comunidad){
+            foreach($lista as $comunidad){
             echo '<option value="', htmlspecialchars($comunidad[0]),'"><', htmlspecialchars($comunidad[1]),'</option>';
             }
             echo '</select>
